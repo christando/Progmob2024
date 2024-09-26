@@ -2,32 +2,54 @@
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-
         public MainPage()
         {
             InitializeComponent();
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
-        {
-            count+=5;
+        string translatedNumber;
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
+        private void OnTranslate(object sender, EventArgs e)
+        {
+            string enteredNumber = phoneNumberText.Text;
+            translatedNumber = PhonewordTranslator.ToNumber(enteredNumber);
+
+            if(!string.IsNullOrWhiteSpace(translatedNumber))
+            {
+                callButton.IsEnabled = true;
+                callButton.Text = "Call " + translatedNumber;
+            }
             else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            {
+                callButton.IsEnabled = false;
+                callButton.Text = "Call";
+            }
         }
 
-        private void OnClickReset(object sender, EventArgs e)
+        async void OnCall(object sender, EventArgs e)
         {
-            count = 0;
-            CounterBtn.Text = $"Click me";
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            if (await this.DisplayAlert(
+                "Dial a Number",
+                "Would you like to call " + translatedNumber + "?",
+                "Yes",
+                "No"))
+            {
+                try
+                {
+                    if (PhoneDialer.Default.IsSupported)
+                        PhoneDialer.Default.Open(translatedNumber);
+                }
+                catch (ArgumentNullException)
+                {
+                    await DisplayAlert("Unable to dial", "Phone number was not valid.", "OK");
+                }
+                catch (Exception)
+                {
+                    // Other error has occurred.
+                    await DisplayAlert("Unable to dial", "Phone dialing failed.", "OK");
+                }
+            }
         }
-
     }
 
 }
