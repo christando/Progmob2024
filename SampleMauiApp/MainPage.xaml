@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SampleMauiApp.MainPage">
+             x:Class="SampleMauiApp.MainPage"
+             xmlns:notes="clr-namespace:SampleMauiApp">
 
 
     <VerticalStackLayout Spacing="15" Padding="20">
         <Label Text="Enter a Phoneword"
-                   FontSize="20"/>
+                   FontSize="20"
+               TextColor="{x:Static Member=notes:SharedResources.FontColor}"/>
         <Entry x:Name="phoneNumberText"
                    Text="1-555-NETMAUI"/>
         <Button x:Name="TranslateButton" 
