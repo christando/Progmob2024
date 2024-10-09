@@ -5,28 +5,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:SampleMauiApp"
     FlyoutIcon="moon.png">
-    
-    <Shell.FlyoutHeader>
-        <Grid HeightRequest="100" BackgroundColor="DarkSlateBlue">
-            <Image Source="moon.png" />
-        </Grid>
-    </Shell.FlyoutHeader>
-    
-    <FlyoutItem Title="Moon Phase">
-        <ShellContent
-            Title="Home"
-            ContentTemplate="{DataTemplate local:MoonPhasePage}"
-            Route="MainPage" />
-    </FlyoutItem>
-    <FlyoutItem Title="Sunrise">
-        <ShellContent
-        ContentTemplate="{DataTemplate local:SunrisePage}"/>
-    </FlyoutItem>
 
-    <FlyoutItem Title="About">
-        <ShellContent
-        ContentTemplate="{DataTemplate local:AboutPage}"/>
-    </FlyoutItem>
+    <TabBar>
+        <Tab>
+            <ShellContent Title="Part List" 
+                      Route="listparts"
+                      ContentTemplate="{DataTemplate local:PartsPage}"/>
+        </Tab>
+    </TabBar>
 
 
 </Shell>
